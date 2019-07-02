@@ -1,0 +1,27 @@
+---
+- name: update packages
+  yum:
+    name: "*"
+    state: latest
+    exclude: kernel*
+  register: update_packages
+
+- name: show update_packages
+  debug:
+    msg: "{{ update_packages }}"
+    verbosity: 2
+
+- name: install kernel
+  yum:
+    name: "kernel*"
+    state: latest
+  register: install_kernel
+
+- name: show install_kernel
+  debug:
+    msg: "{{ install_kernel }}"
+    verbosity: 2
+
+- name: reboot system if new kernel is installed
+  reboot:
+  when: install_kernel.changed
