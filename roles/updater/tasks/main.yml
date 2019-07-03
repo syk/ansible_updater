@@ -16,6 +16,7 @@
     name: "kernel*"
     state: latest
   register: install_kernel
+  when: kernel_update == "yes"
 
 - name: show install_kernel
   debug:
